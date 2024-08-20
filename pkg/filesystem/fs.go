@@ -622,6 +622,7 @@ func (fs *Filesystem) createDaemon(fsManager *manager.Manager, daemonMode config
 		daemon.WithLogRotationSize(config.GetDaemonLogRotationSize()),
 		daemon.WithLogToStdout(config.GetLogToStdout()),
 		daemon.WithNydusdThreadNum(config.GetDaemonThreadsNumber()),
+		daemon.WithNydusdPrefetchFiles(config.GetDaemonPrefetchFiles()),
 		daemon.WithFsDriver(fsManager.FsDriver),
 		daemon.WithDaemonMode(daemonMode),
 	}

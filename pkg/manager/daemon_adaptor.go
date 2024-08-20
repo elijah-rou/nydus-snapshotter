@@ -175,13 +175,24 @@ func (m *Manager) BuildDaemonCommand(d *daemon.Daemon, bin string, upgrade bool)
 			command.WithSupervisor(d.Supervisor.Sock()),
 			command.WithID(d.ID()))
 	}
-
+	var prefetchList string
+	if d.States.PrefetchFiles != "" {
+		// cmdOpts = append(cmdOpts, command.WithPrefetchFiles(d.States.PrefetchFiles))
+		prefetchList = d.States.PrefetchFiles
+	}
 	if imageReference != "" {
 		prefetchfiles := prefetch.Pm.GetPrefetchInfo(imageReference)
 		if prefetchfiles != "" {
-			cmdOpts = append(cmdOpts, command.WithPrefetchFiles(prefetchfiles))
+			if prefetchList == "" {
+				prefetchList = prefetchfiles
+			} else {
+				prefetchList = prefetchList + "," + prefetchfiles
+			}
 			prefetch.Pm.DeleteFromPrefetchMap(imageReference)
 		}
+	}
+	if prefetchList != "" {
+		cmdOpts = append(cmdOpts, command.WithPrefetchFiles(prefetchList))
 	}
 
 	cmdOpts = append(cmdOpts,
