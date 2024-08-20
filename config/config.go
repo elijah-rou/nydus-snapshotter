@@ -136,6 +136,7 @@ type DaemonConfig struct {
 	FsDriver         string `toml:"fs_driver"`
 	ThreadsNumber    int    `toml:"threads_number"`
 	LogRotationSize  int    `toml:"log_rotation_size"`
+	PrefetchFiles    string `toml:"prefetch_files"`
 }
 
 type LoggingConfig struct {
