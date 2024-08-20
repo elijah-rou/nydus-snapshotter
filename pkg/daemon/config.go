@@ -99,6 +99,13 @@ func WithNydusdThreadNum(nydusdThreadNum int) NewDaemonOpt {
 	}
 }
 
+func WithNydusdPrefetchFiles(prefetchFiles string) NewDaemonOpt {
+	return func(d *Daemon) error {
+		d.States.PrefetchFiles = prefetchFiles
+		return nil
+	}
+}
+
 func WithFsDriver(fsDriver string) NewDaemonOpt {
 	return func(d *Daemon) error {
 		d.States.FsDriver = fsDriver
